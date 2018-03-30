@@ -1,0 +1,42 @@
+body {
+  height: 100%;
+  margin: 10px;
+  width: 100%;
+  position: absolute;
+  background-color: #000000;
+  font-family: helvetica;
+}
+
+.map-wrapper {
+  position: relative;
+  height: 100%;
+  width: 85%;
+}
+
+#map {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.layer1-picker {
+  position: absolute;
+  right: 300px;
+  top: 15px;
+  z-index: 20000;
+}
+
+.textbox {
+    cursor: default;
+    background-color: #d6dbd9;
+    font-size: 17px;
+    width: 200px;
+    height: 100%;
+    padding: 10px;
+    position: absolute;
+    right: 35px;
+    top: 0px;
+    z-index: 5000;
+  font-family: helvetica;
+}
+/* Your styles go here */
