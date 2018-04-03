@@ -21,22 +21,47 @@ body {
 
 .layer1-picker {
   position: absolute;
-  right: 300px;
+  right: 100px;
   top: 15px;
   z-index: 20000;
+  padding:10px;
+  background-color:#f1f442;
+}
+
+.sidewindow {
+  background-color: black;
+  height: 100%;
+  padding: 10px;
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  z-index: 5000;
+  width: 250px
 }
 
 .textbox {
     cursor: default;
-    background-color: #d6dbd9;
-    font-size: 17px;
-    width: 200px;
-    height: 100%;
-    padding: 10px;
-    position: absolute;
-    right: 35px;
-    top: 0px;
-    z-index: 5000;
+    font-size: 14px;
+    width: 250px;
+    font-family: helvetica;
+    color: white;
+}
+
+.sidebar-feature-content {
+  background: black;
+  float: right;
+  height: 200px;
+  padding: 10px;
+  width: 225px;
+  z-index: 10000;
   font-family: helvetica;
+  color: white;
+}
+
+.sidebar-footer {
+  margin-top: 75px;
+  font-family: helvetica;
+  font-size: 12px;
+  float: right;
 }
 /* Your styles go here */
