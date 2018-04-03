@@ -65,33 +65,41 @@ var style2 = new carto.style.CartoCSS(`
 var layer2 = new carto.layer.Layer(source2, style2);
 
 //------------layer 2 close----------------//
-// ------------------------------pop-up------------------------------------------ //
 
-var layer1pop = new carto.layer.Layer(source1, style1, {
-  featureClickColumns: ['totval', 'use']
+//------------layer 3 start----------------//
+var source3 = new carto.source.SQL("SELECT * FROM parcel_use_for_carto");
+
+// Create style for the data
+var style3 = new carto.style.CartoCSS(`
+#layer {
+  polygon-fill: transparent;
+  opacity: 1;
+}
+
+`);
+//------------layer 3 close----------------//
+
+// ------------------------------sidebar start------------------------------------------ //
+var sidebarLayer = new carto.layer.Layer(source3, style3, {
+  featureClickColumns: ['use', 'totval', 'yrblt', 'dba']
 });
 
-var layer1Popup = L.popup();
-layer1pop.on('featureClicked', function (event) {
-  // Create the HTML that will go in the popup. event.data has all the data for 
-  // the clicked feature.
-  //
-  // I will add the content line-by-line here to make it a little easier to read.
-  var popContent = '<h1>' + event.data['use'] + '</h1>'
-  popContent += '<div>$' + event.data['totval'] + ' appraised value</div>';
-  layer1Popup.setContent(popContent);
   
-  // Place the popup and open it
- layer1Popup.setLatLng(event.latLng);
- layer1Popup.openOn(map);
+var sidebar = document.querySelector('.sidebar-feature-content');
+sidebarLayer.on('featureClicked', function (event) {
+  var content = '<h1>' + event.data['use'] + '</h1>'
+  content += '<div>2017 Appraisal Value: $' + event.data['totval'] + '';
+  content += '<div></br>Year Built: ' + event.data['yrblt'] + ' </div>';
+  content += '<div></br>Doing Business as: ' + event.data['dba'] + ' </div>';
+  console.log(sidebar, content);
+  sidebar.innerHTML = content;
   
-  console.log('layer1pop change event happened');
+  console.log('sidebarLayer change event happened');
 });
-// ------------------------------pop-up close------------------------------------------ //
-
+// ------------------------------sidebar close------------------------------------------ //
 
 // Add the data to the map as a layer
-client.addLayers([layer1, layer1pop,layer2]);
+client.addLayers([layer1, sidebarLayer, layer2]);
 client.getLeafletLayer().addTo(map);
 
 // ------------------------------dropdown start------------------------------------------ //
@@ -102,45 +110,10 @@ var layer1Picker = document.querySelector('.layer1-picker');
 layer1Picker.addEventListener('change', function (e) {
   console.log('layer1Picker change event happened');
   
-
   // The value of the dropdown is in e.target.value when it changes
   
-var parcelUse = e.target.value;
-  
-// Step 3: Decide on the SQL query to use and set it on the datasource
-if (parcelUse === 'all') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto");
-  }
-if (parcelUse === 'Singlefami') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = 'Singlefami'");
-  }
-if (parcelUse === 'Retail') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = 'Retail'");
-  } 
-if (parcelUse === 'Vacant') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = 'Vacant'");
-  } 
-if (parcelUse === 'Industrial') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = 'Industrial'");
-  }  
-if (parcelUse === 'Gov Owned') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = 'Gov Owned'");
-  }  
-if (parcelUse === 'Religous') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = 'Religous'");
-  }   
-if (parcelUse === 'Multifam') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = 'Multifam'");
-  }  
-if (parcelUse === 'Medical') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = 'Medical'");
-  }   
-if (parcelUse === 'Hotel') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = 'Hotel'");
-  }
-if (parcelUse === 'Parking') {
-    source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = 'Parking'");
-  }   
+var parcelUse = e.target.value;  
+source1.setQuery("SELECT * FROM parcel_use_for_carto WHERE use = '" + parcelUse + "'");  
 });
   
 // ------------------------------dropdown close------------------------------------------ //
